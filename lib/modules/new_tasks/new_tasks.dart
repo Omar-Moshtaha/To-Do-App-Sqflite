@@ -11,7 +11,6 @@ class New_Tasks extends StatelessWidget {
       listener: (context, state) {
 
       },
-
       builder: (context, state) {
         var tasks=AppCubit.get(context).New_task;
         return bulid_list_New(tasks);
