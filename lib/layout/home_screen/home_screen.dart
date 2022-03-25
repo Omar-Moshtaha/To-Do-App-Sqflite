@@ -202,7 +202,7 @@ AppCubit.get(context).colors(0xFF42A5F5);
 
                  } else {
                    if (form.currentState!.validate() && AppCubit.get(context).color!=null) {
-                     AppCubit.get(context).insert(title: email.text, time: time.text, date: date.text, color: AppCubit.get(context).color);
+                     AppCubit.get(context).insert(title: email.text, time: time.text, date: date.text, color: AppCubit.get(context).color,value: 0);
                      Navigator.pop(context);
 
                    } else {

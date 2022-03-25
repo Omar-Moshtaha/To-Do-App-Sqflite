@@ -101,7 +101,7 @@ Widget bulid_New(item, context) => Dismissible(
                 width: 400,
                 child: Form(
                   key: form,
-                  child: SingleChildScrollView(
+                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -217,7 +217,7 @@ Widget bulid_New(item, context) => Dismissible(
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  AppCubit.get(context).colors(0xffb51248);
+                                   AppCubit.get(context).colors(0xffb51248);
                                 },
                                 child: Container(
                                   height: 35,
@@ -306,7 +306,7 @@ Widget bulid_New(item, context) => Dismissible(
                 ),
                 IconButton(
                     onPressed: () {
-                      AppCubit.get(context).updates("Done", item["id"]);
+                      AppCubit.get(context).updates("Done", 1,item["id"]);
                     },
                     icon: Icon(
                       Icons.check_box,
@@ -314,7 +314,7 @@ Widget bulid_New(item, context) => Dismissible(
                     )),
                 IconButton(
                     onPressed: () {
-                      AppCubit.get(context).updates("Archive", item["id"]);
+                      AppCubit.get(context).updates("Archive", 2,item["id"]);
                     },
                     icon: Icon(
                       Icons.archive,
@@ -373,7 +373,7 @@ Widget bulid_Done(item, context) => Dismissible(
               ),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Done", item["id"]);
+                    AppCubit.get(context).updates("Done", 1,item["id"]);
                   },
                   icon: Icon(
                     Icons.check_box,
@@ -381,7 +381,7 @@ Widget bulid_Done(item, context) => Dismissible(
                   )),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Archive", item["id"]);
+                    AppCubit.get(context).updates("Archive",2, item["id"]);
                   },
                   icon: Icon(
                     Icons.archive,
@@ -439,7 +439,7 @@ Widget bulid_Archive(item, context) => Dismissible(
               ),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Done", item["id"]);
+                    AppCubit.get(context).updates("Done", 1,item["id"]);
                   },
                   icon: Icon(
                     Icons.check_box,
@@ -447,7 +447,7 @@ Widget bulid_Archive(item, context) => Dismissible(
                   )),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Archive", item["id"]);
+                    AppCubit.get(context).updates("Archive", 2,item["id"]);
                   },
                   icon: Icon(
                     Icons.archive,

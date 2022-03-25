@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:to_do/modules/archive_tasks/archive_tasks.dart';
 import 'package:to_do/modules/done_tasks/done_tasks.dart';
 import 'package:to_do/modules/new_tasks/new_tasks.dart';
+import 'package:to_do/shared/components/constant.dart';
 import 'package:to_do/shared/cubit/states.dart';
 
 class AppCubit extends Cubit<AppStates>{
@@ -49,10 +50,10 @@ class AppCubit extends Cubit<AppStates>{
   void creat() async {
      openDatabase(
       'qwq.db',
-      version: 2,
+      version: 5,
       onCreate: (db, version) {
         db.execute(
-            'CREATE TABLE Tasq (id INTEGER PRIMARY KEY, title TEXT,time TEXT , date TEXT ,statue TEXT,color INTEGER)')
+            'CREATE TABLE Tasq (id INTEGER PRIMARY KEY, title TEXT,time TEXT , date TEXT ,statue TEXT,color INTEGER,value INTEGER)')
             .then((value) {
           print("table creat");
         }).catchError((error) {
@@ -62,7 +63,9 @@ class AppCubit extends Cubit<AppStates>{
       },
       onOpen: (db) {
         print("data base open");
-        get_db(db);
+        get_db(db,0);
+        getDone(db, 1);
+        getArchived(db, 2);
       },
     ).then((value){
       db=value;
@@ -74,18 +77,20 @@ class AppCubit extends Cubit<AppStates>{
     required String time,
     required String date,
     required int color,
-  }) async =>
+     required int value,
+
+   }) async =>
       db.transaction((txn) async{
         await txn
             .rawInsert(
-            'INSERT INTO Tasq(title, time, date,statue,color) VALUES("$title", "$time", "$date","New","$color")')
+            'INSERT INTO Tasq(title, time, date,statue,color,value) VALUES("$title", "$time", "$date","New","$color","$value")')
 
             .then((value) {
 
           print("$value insert succfelod");
           emit(InsertDb());
 
-          get_db(db);
+          get_db(db,0);
 
 
         }).catchError((error) {
@@ -93,30 +98,40 @@ class AppCubit extends Cubit<AppStates>{
         });
       });
 
-  void get_db(db)  {
-    New_task=[];
-    Archive_task=[];
-    Done_task=[];
-    emit(Load());
-      db.rawQuery('SELECT * FROM Tasq').then((value) {
-      value.forEach((element) {
-        if(element["statue"]=="New"){
-          New_task.add(element);
-        }else if(element["statue"]=="Done"){
-          Done_task.add(element);
-        }else{
-          Archive_task.add(element);
+  void get_db(db,int value)  {
 
-        }
-      });
+    emit(Load());
+      db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
+        Newtask = value;
+
     emit(GetDb());
       });
   }
-  void updates( String states,int id){
+  void getDone(db,int value)  {
+
+    emit(Load());
+    db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
+      Donetask = value;
+
+      emit(GetDb());
+    });
+  }
+  void getArchived(db,int value)  {
+    emit(Load());
+    db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
+      Archivetask = value;
+
+      emit(GetDb());
+    });
+  }
+
+  void updates( String states,int value,int id){
      db.rawUpdate(
-        'UPDATE Tasq SET  statue= ?  WHERE id = ?',
-        ['$states', id]).then((value){
-       get_db(db);
+        'UPDATE Tasq SET  statue= ?, value=?  WHERE id = ?',
+        ['$states',value, id]).then((value){
+       get_db(db,0);
+       getDone(db, 1);
+       getArchived(db, 2);
           emit(update());
      });
 
@@ -125,7 +140,7 @@ class AppCubit extends Cubit<AppStates>{
     db.rawUpdate(
         'UPDATE Tasq SET  title= ?, time= ?, date= ?,color=?  WHERE id = ?',
         ['$title', '$time','$date',color,id]).then((value){
-      get_db(db);
+      get_db(db,0);
       emit(UpdatData());
     });
 
@@ -134,7 +149,9 @@ class AppCubit extends Cubit<AppStates>{
   void delete( int id){
     db.rawDelete(
         'DELETE FROM Tasq WHERE id = ?', [id]).then((value) {
-      get_db(db);
+      get_db(db,0);
+      getDone(db, 1);
+      getArchived(db, 2);
       emit(Delete());
     }) ;
 
