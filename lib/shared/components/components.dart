@@ -86,7 +86,7 @@ String? validator_Date(String? value) {
 }
 
 Widget bulid_New(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GestureDetector(
@@ -280,7 +280,7 @@ Widget bulid_New(item, context) => Dismissible(
                   child: CircleAvatar(
                     radius: 40,
                     backgroundColor: Color(item["color"]),
-                    child: Text("${item["time"]}"),
+                    child: Text("${item["time"]}",maxLines: 2,overflow: TextOverflow.ellipsis,),
                   ),
                 ),
                 SizedBox(
@@ -290,14 +290,20 @@ Widget bulid_New(item, context) => Dismissible(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${item["title"]}",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    Container(
+                      width: 86,
+                      child: Text(
+                        "${item["title"]}",
+                        maxLines: 3,overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 13.0, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(
                       "${item["date"]}",
-                      style: TextStyle(color: Colors.grey),
+                      maxLines: 2,overflow: TextOverflow.ellipsis,
+
+                      style: TextStyle(color: Colors.grey,fontSize: 12),
                     ),
                   ],
                 ),
@@ -333,7 +339,7 @@ Widget bulid_New(item, context) => Dismissible(
     );
 
 Widget bulid_Done(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
@@ -347,7 +353,7 @@ Widget bulid_Done(item, context) => Dismissible(
                 child: CircleAvatar(
                   radius: 40,
                   backgroundColor: Color(item["color"]),
-                  child: Text("${item["time"]}"),
+                  child: Text("${item["time"]}",maxLines: 2,overflow: TextOverflow.ellipsis,),
                 ),
               ),
               SizedBox(
@@ -357,14 +363,20 @@ Widget bulid_Done(item, context) => Dismissible(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${item["title"]}",
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  Container(
+                    width: 86,
+                    child: Text(
+                      "${item["title"]}",
+                      style:
+                          TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold,)
+                      ,
+                      maxLines: 3,overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Text(
                     "${item["date"]}",
                     style: TextStyle(color: Colors.grey),
+                    maxLines: 2,overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -399,7 +411,7 @@ Widget bulid_Done(item, context) => Dismissible(
     );
 
 Widget bulid_Archive(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
@@ -413,7 +425,7 @@ Widget bulid_Archive(item, context) => Dismissible(
                 child: CircleAvatar(
                   radius: 40,
                   backgroundColor: Color(item["color"]),
-                  child: Text("${item["time"]}"),
+                  child: Text("${item["time"]}",maxLines: 2,overflow: TextOverflow.ellipsis,),
                 ),
               ),
               SizedBox(
@@ -423,13 +435,18 @@ Widget bulid_Archive(item, context) => Dismissible(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${item["title"]}",
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  Container(
+                    width:86,
+                    child: Text(
+                      "${item["title"]}",
+                      maxLines:3,overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Text(
                     "${item["date"]}",
+                    maxLines: 2,overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.grey),
                   ),
                 ],
