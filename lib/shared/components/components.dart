@@ -86,7 +86,7 @@ String? validator_Date(String? value) {
 }
 
 Widget bulid_New(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GestureDetector(
@@ -333,7 +333,7 @@ Widget bulid_New(item, context) => Dismissible(
     );
 
 Widget bulid_Done(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
@@ -399,7 +399,7 @@ Widget bulid_Done(item, context) => Dismissible(
     );
 
 Widget bulid_Archive(item, context) => Dismissible(
-      key: Key(item["id"].toString()),
+      key: UniqueKey(),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(

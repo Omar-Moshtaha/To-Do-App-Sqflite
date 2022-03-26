@@ -11,3 +11,5 @@ class update extends AppStates{}
 class UpdatData extends AppStates{}
 
 class Delete extends AppStates{}
+class LoadDelete extends AppStates{}
+
