@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do/shared/cubit/cubit.dart';
-import 'package:to_do/shared/cubit/states.dart';
+import 'package:to_do/shared/cubit/status.dart';
 
 Widget bulid_textFormField(
         {VoidCallback? fun,
@@ -241,7 +241,7 @@ Widget bulid_New(item, context) => Dismissible(
                             onPressed: () {
                               if (form.currentState!.validate() &&
                                   AppCubit.get(context).color != null) {
-                                AppCubit.get(context).updatData(
+                                AppCubit.get(context).updateDataOFElement(
                                     email.text,
                                     time.text,
                                     date.text,
@@ -312,7 +312,7 @@ Widget bulid_New(item, context) => Dismissible(
                 ),
                 IconButton(
                     onPressed: () {
-                      AppCubit.get(context).updates("Done", 1,item["id"]);
+                      AppCubit.get(context).updatesDataForElement("Done", 1,item["id"]);
                     },
                     icon: Icon(
                       Icons.check_box,
@@ -320,7 +320,7 @@ Widget bulid_New(item, context) => Dismissible(
                     )),
                 IconButton(
                     onPressed: () {
-                      AppCubit.get(context).updates("Archive", 2,item["id"]);
+                      AppCubit.get(context).updatesDataForElement("Archive", 2,item["id"]);
                     },
                     icon: Icon(
                       Icons.archive,
@@ -332,7 +332,7 @@ Widget bulid_New(item, context) => Dismissible(
         ),
       ),
       onDismissed: (direction) {
-        AppCubit.get(context).delete(
+        AppCubit.get(context).deleteElement(
           item["id"],
         );
       },
@@ -385,7 +385,7 @@ Widget bulid_Done(item, context) => Dismissible(
               ),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Done", 1,item["id"]);
+                    AppCubit.get(context).updatesDataForElement("Done", 1,item["id"]);
                   },
                   icon: Icon(
                     Icons.check_box,
@@ -393,7 +393,7 @@ Widget bulid_Done(item, context) => Dismissible(
                   )),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Archive",2, item["id"]);
+                    AppCubit.get(context).updatesDataForElement("Archive",2, item["id"]);
                   },
                   icon: Icon(
                     Icons.archive,
@@ -404,7 +404,7 @@ Widget bulid_Done(item, context) => Dismissible(
         ),
       ),
       onDismissed: (direction) {
-        AppCubit.get(context).delete(
+        AppCubit.get(context).deleteElement(
           item["id"],
         );
       },
@@ -456,7 +456,7 @@ Widget bulid_Archive(item, context) => Dismissible(
               ),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Done", 1,item["id"]);
+                    AppCubit.get(context).updatesDataForElement("Done", 1,item["id"]);
                   },
                   icon: Icon(
                     Icons.check_box,
@@ -464,7 +464,7 @@ Widget bulid_Archive(item, context) => Dismissible(
                   )),
               IconButton(
                   onPressed: () {
-                    AppCubit.get(context).updates("Archive", 2,item["id"]);
+                    AppCubit.get(context).updatesDataForElement("Archive", 2,item["id"]);
                   },
                   icon: Icon(
                     Icons.archive,
@@ -475,7 +475,7 @@ Widget bulid_Archive(item, context) => Dismissible(
         ),
       ),
       onDismissed: (direction) {
-        AppCubit.get(context).delete(
+        AppCubit.get(context).deleteElement(
           item["id"],
         );
       },
@@ -571,7 +571,7 @@ Widget bulid_list_Archive(List<Map>task){
 }
 
 Widget ConditionalBuilders(context){
-  if(State is! Load){
+  if(State is! LoadData){
   return  AppCubit.get(context).Screen[ AppCubit.get(context).index];
   }else{
     return  Center(child: CircularProgressIndicator());

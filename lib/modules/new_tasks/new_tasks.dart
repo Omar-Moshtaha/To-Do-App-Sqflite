@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/shared/components/components.dart';
 import 'package:to_do/shared/components/constant.dart';
 import 'package:to_do/shared/cubit/cubit.dart';
-import 'package:to_do/shared/cubit/states.dart';
+import 'package:to_do/shared/cubit/status.dart';
 
 class New_Tasks extends StatelessWidget {
   @override

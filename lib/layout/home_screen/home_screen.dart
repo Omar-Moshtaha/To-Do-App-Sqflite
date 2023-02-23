@@ -1,17 +1,10 @@
-import 'package:conditional_builder/conditional_builder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import 'package:sqflite/sqflite.dart';
-import 'package:to_do/modules/archive_tasks/archive_tasks.dart';
-import 'package:to_do/modules/done_tasks/done_tasks.dart';
-import 'package:to_do/modules/new_tasks/new_tasks.dart';
 import 'package:to_do/shared/components/components.dart';
-import 'package:to_do/shared/components/constant.dart';
 import 'package:to_do/shared/cubit/cubit.dart';
-import 'package:to_do/shared/cubit/states.dart';
+import 'package:to_do/shared/cubit/status.dart';
 class Home_Screen extends StatelessWidget {
   var email = TextEditingController();
   var time = TextEditingController();
@@ -22,13 +15,13 @@ class Home_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit()..creat(),
+      create: (context) => AppCubit()..creatDd(),
       child: BlocConsumer<AppCubit,AppStates>(
         listener: (context, state) {
-if (state is InsertDb){
+if (state is InsertToDb){
 AppCubit.get(context).color=null as int;
 }
-if (state is UpdatData){
+if (state is UpdateElementData){
   AppCubit.get(context).color=null as int;
 }
         },
@@ -195,14 +188,14 @@ AppCubit.get(context).colors(0xFF42A5F5);
                    ))
                        .closed
                        .then((value) {
-                         AppCubit.get(context).changes(Icons.edit, true);
+                         AppCubit.get(context).changesStatusOfObscuredOfTextForm(Icons.edit, true);
                    });
 
-                   AppCubit.get(context).changes(Icons.add, false);
+                   AppCubit.get(context).changesStatusOfObscuredOfTextForm(Icons.add, false);
 
                  } else {
                    if (form.currentState!.validate() && AppCubit.get(context).color!=null) {
-                     AppCubit.get(context).insert(title: email.text, time: time.text, date: date.text, color: AppCubit.get(context).color,value: 0);
+                     AppCubit.get(context).insertToDd(title: email.text, time: time.text, date: date.text, color: AppCubit.get(context).color,value: 0);
                      Navigator.pop(context);
 
                    } else {
@@ -366,7 +359,7 @@ AppCubit.get(context).colors(0xFF42A5F5);
                      )).closed
                          .then((value) {
 
-                       AppCubit.get(context).changes(Icons.edit, true);
+                       AppCubit.get(context).changesStatusOfObscuredOfTextForm(Icons.edit, true);
 
                      });
                    }
@@ -379,7 +372,7 @@ AppCubit.get(context).colors(0xFF42A5F5);
              bottomNavigationBar:  BottomNavigationBar(
                currentIndex:  AppCubit.get(context).index,
                onTap: (value) {
-                 AppCubit.get(context).change_index(value);
+                 AppCubit.get(context).changeIndexOfBottomNavigation(value);
                },
                items: [
                  BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Tasks"),

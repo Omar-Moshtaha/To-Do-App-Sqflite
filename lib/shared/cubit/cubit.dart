@@ -1,7 +1,4 @@
- import 'dart:math';
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,16 +6,14 @@ import 'package:to_do/modules/archive_tasks/archive_tasks.dart';
 import 'package:to_do/modules/done_tasks/done_tasks.dart';
 import 'package:to_do/modules/new_tasks/new_tasks.dart';
 import 'package:to_do/shared/components/constant.dart';
-import 'package:to_do/shared/cubit/states.dart';
+import 'package:to_do/shared/cubit/status.dart';
 
 class AppCubit extends Cubit<AppStates>{
   AppCubit() : super(InitialState());
  static AppCubit get(context)=>BlocProvider.of(context);
   var index = 0;
   late Database db;
-  List<Map> New_task =[];
-  List<Map> Done_task =[];
-  List<Map> Archive_task =[];
+
 
   List<Widget> Screen = [
     New_Tasks(),
@@ -32,22 +27,22 @@ class AppCubit extends Cubit<AppStates>{
   ];
   IconData icon = Icons.edit;
   bool show = true;
-  void changes(IconData icons,bool shows ){
+  void changesStatusOfObscuredOfTextForm(IconData icons,bool shows ){
     icon=icons;
     show=shows;
-    emit(change());
+    emit(ShowPasswordAndHide());
   }
   late int color;
 
   void colors(int value ){
     color=value;
-    emit(change_value());
+    emit(ChangeValueOfColor());
   }
-  void change_index(int value){
+  void changeIndexOfBottomNavigation(int value){
     index=value;
-    emit(BottomNavigationBars());
+    emit(ChangeIndexOfBottomNavigation());
   }
-  void creat() async {
+  void creatDd() async {
      openDatabase(
       'qwq.db',
       version: 5,
@@ -63,16 +58,16 @@ class AppCubit extends Cubit<AppStates>{
       },
       onOpen: (db) {
         print("data base open");
-        get_db(db,0);
-        getDone(db, 1);
-        getArchived(db, 2);
+        getListOfNewTask(db,0);
+        getListOfDoneTask(db, 1);
+        getListOfArchivedTask(db, 2);
       },
     ).then((value){
       db=value;
       emit(CreatDb());
      });
   }
-   insert({
+   insertToDd({
     required String title,
     required String time,
     required String date,
@@ -88,9 +83,9 @@ class AppCubit extends Cubit<AppStates>{
             .then((value) {
 
           print("$value insert succfelod");
-          emit(InsertDb());
+          emit(InsertToDb());
 
-          get_db(db,0);
+          getListOfNewTask(db,0);
 
 
         }).catchError((error) {
@@ -98,61 +93,61 @@ class AppCubit extends Cubit<AppStates>{
         });
       });
 
-  void get_db(db,int value)  {
+  void getListOfNewTask(db,int value)  {
 
-    emit(Load());
+    emit(LoadData());
       db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
         Newtask = value;
 
-    emit(GetDb());
+    emit(GetFormDb());
       });
   }
-  void getDone(db,int value)  {
+  void getListOfDoneTask(db,int value)  {
 
-    emit(Load());
+    emit(LoadData());
     db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
       Donetask = value;
 
-      emit(GetDb());
+      emit(GetFormDb());
     });
   }
-  void getArchived(db,int value)  {
-    emit(Load());
+  void getListOfArchivedTask(db,int value)  {
+    emit(LoadData());
     db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
       Archivetask = value;
 
-      emit(GetDb());
+      emit(GetFormDb());
     });
   }
 
-  void updates( String states,int value,int id){
+  void updatesDataForElement( String states,int value,int id){
      db.rawUpdate(
         'UPDATE Tasq SET  statue= ?, value=?  WHERE id = ?',
         ['$states',value, id]).then((value){
-       get_db(db,0);
-       getDone(db, 1);
-       getArchived(db, 2);
-          emit(update());
+       getListOfNewTask(db,0);
+       getListOfDoneTask(db, 1);
+       getListOfArchivedTask(db, 2);
+          emit(UpdateData());
      });
 
   }
-  void updatData( String title, String time ,String date,int color,int id){
+  void updateDataOFElement( String title, String time ,String date,int color,int id){
     db.rawUpdate(
         'UPDATE Tasq SET  title= ?, time= ?, date= ?,color=?  WHERE id = ?',
         ['$title', '$time','$date',color,id]).then((value){
-      get_db(db,0);
-      emit(UpdatData());
+      getListOfNewTask(db,0);
+      emit(UpdateElementData());
     });
 
   }
 
-  void delete( int id){
+  void deleteElement( int id){
     db.rawDelete(
         'DELETE FROM Tasq WHERE id = ?', [id]).then((value) {
-      get_db(db,0);
-      getDone(db, 1);
-      getArchived(db, 2);
-      emit(Delete());
+      getListOfNewTask(db,0);
+      getListOfDoneTask(db, 1);
+      getListOfArchivedTask(db, 2);
+      emit(DeleteElement());
     }) ;
 
   }
