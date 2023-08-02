@@ -13,8 +13,14 @@ class AppCubit extends Cubit<AppStates>{
  static AppCubit get(context)=>BlocProvider.of(context);
   var index = 0;
   late Database db;
+int ?indexColor;
+List<Color>listOfColors=[
+  Color(0xFF42A5F5),
+  Color(3426920849),
+  Color(4294951175),
+  Color(0xffb51248),
 
-
+  ];
   List<Widget> Screen = [
     New_Tasks(),
     Done_Tasks(),
@@ -27,12 +33,12 @@ class AppCubit extends Cubit<AppStates>{
   ];
   IconData icon = Icons.edit;
   bool show = true;
-  void changesStatusOfObscuredOfTextForm(IconData icons,bool shows ){
+  Future<void> changesStatusOfObscuredOfTextForm(IconData icons,bool shows ) async {
     icon=icons;
     show=shows;
     emit(ShowPasswordAndHide());
   }
-  late int color;
+   int color=0;
 
   void colors(int value ){
     color=value;
@@ -67,7 +73,7 @@ class AppCubit extends Cubit<AppStates>{
       emit(CreatDb());
      });
   }
-   insertToDd({
+   Future<void> insertToDd({
     required String title,
     required String time,
     required String date,
