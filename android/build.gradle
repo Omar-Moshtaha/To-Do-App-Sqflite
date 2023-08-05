@@ -1,4 +1,5 @@
 buildscript {
+<<<<<<< HEAD
     ext.kotlin_version = '1.7.10'
     repositories {
         google()
@@ -12,6 +13,16 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
 
         // END: FlutterFire Configuration
+=======
+    ext.kotlin_version = '1.6.10'
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+>>>>>>> e98c76c6bcc6f17dfa332d16edd4b8b240c21faa
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -19,15 +30,22 @@ buildscript {
 allprojects {
     repositories {
         google()
+<<<<<<< HEAD
         mavenCentral()
+=======
+        jcenter()
+>>>>>>> e98c76c6bcc6f17dfa332d16edd4b8b240c21faa
     }
 }
 
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+<<<<<<< HEAD
 }
 subprojects {
+=======
+>>>>>>> e98c76c6bcc6f17dfa332d16edd4b8b240c21faa
     project.evaluationDependsOn(':app')
 }
 
